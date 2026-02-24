@@ -4,10 +4,25 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+
         WordService wordService = new WordService();
 
         System.out.println("=== BUSCADOR DE PALAVRAS ===");
+
+        try(Scanner scanner = new Scanner(System.in)){
+
+            String text = readFullText(scanner);
+            String targetWord = readTargetWord(scanner);
+
+            int count = wordService.countOccurrences(text, targetWord);
+            String textHighlighted = wordService.highlightWord(text, targetWord);
+
+            showResult(targetWord, count, textHighlighted);
+        }
+    }
+
+    private static String readFullText(Scanner scanner){
+
         String fullText;
 
         do {
@@ -32,10 +47,14 @@ public class Main {
             }
         } while (fullText.isEmpty());
 
+        return fullText;
+    }
+
+    private static String readTargetWord(Scanner scanner){
         String target;
         do {
 
-            System.out.println("\n Digite a palavra que deseja buscar: ");
+            System.out.println("\nDigite a palavra que deseja buscar: ");
             target = scanner.nextLine().trim();
 
             if (target.isEmpty()) {
@@ -43,14 +62,18 @@ public class Main {
             }
 
         } while (target.isEmpty());
+        return target;
+    }
 
-        int count = wordService.countOcurrences(fullText, target);
-        String highlighted = wordService.highlightWord(fullText, target);
+    private static void showResult(String targetWord, int count, String textHighlighted){
 
-        System.out.println("\n--- RESULTADO ---");
-        System.out.println("A palavra '" + target + "' apareceu " + count + " vezes");
-        System.out.println("\nTexto formatado:\n" + highlighted);
+        String format = (count == 1) ? "vez" : "vezes";
 
-        scanner.close();
+        System.out.printf(
+                        "--- RESULTADO ---%n" +
+                        "A palavra '%s' apareceu %d %s%n%n" +
+                        "Texto formatado:%n%s"
+
+        , targetWord, count, format, textHighlighted);
     }
 }

@@ -5,12 +5,7 @@ import java.util.regex.Pattern;
 
 public class WordService {
 
-    /*
-    \u001b[31m
-    \033[31m
-     */
-
-    public int countOcurrences(String text, String target){
+    public int countOccurrences(String text, String target){
         Pattern pattern = buildPattern(target);
         Matcher matcher = pattern.matcher(text);
 
@@ -43,5 +38,4 @@ public class WordService {
         String regex = "\\b" + Pattern.quote(target) + "\\b";
         return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
     }
-
 }
