@@ -8,19 +8,41 @@ public class Main {
         WordService wordService = new WordService();
 
         System.out.println("=== BUSCADOR DE PALAVRAS ===");
-        System.out.println("Cole seu texto abaixo (linha vazia para finalizar): ");
+        String fullText;
 
-        StringBuilder sb = new StringBuilder();
-        while (true){
-            String line = scanner.nextLine();
-            if (line.isEmpty()) break;
-            sb.append(line).append('\n');
-        }
+        do {
+            System.out.println("Cole seu texto abaixo (linha vazia para finalizar): ");
 
-        String fullText = sb.toString();
+            StringBuilder sb = new StringBuilder();
 
-        System.out.println("\n Digite a palavra que deseja buscar: ");
-        String target = scanner.next();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+
+                if (line.isEmpty()) {
+                    break;
+                }
+
+                sb.append(line).append("\n");
+            }
+
+            fullText = sb.toString().trim();
+
+            if (fullText.isEmpty()) {
+                System.out.println("Texto vazio, tente novamente.\n");
+            }
+        } while (fullText.isEmpty());
+
+        String target;
+        do {
+
+            System.out.println("\n Digite a palavra que deseja buscar: ");
+            target = scanner.nextLine().trim();
+
+            if (target.isEmpty()) {
+                System.out.println("A palavra alvo não pode ser vazia.");
+            }
+
+        } while (target.isEmpty());
 
         int count = wordService.countOcurrences(fullText, target);
         String highlighted = wordService.highlightWord(fullText, target);

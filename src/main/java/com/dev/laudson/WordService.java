@@ -5,6 +5,11 @@ import java.util.regex.Pattern;
 
 public class WordService {
 
+    /*
+    \u001b[31m
+    \033[31m
+     */
+
     public int countOcurrences(String text, String target){
         Pattern pattern = buildPattern(target);
         Matcher matcher = pattern.matcher(text);
@@ -20,11 +25,14 @@ public class WordService {
         Pattern pattern = buildPattern(target);
         Matcher matcher = pattern.matcher(text);
 
+        String corVermelha = "\u001b[31m";
+        String resetCor = "\u001b[0m";
+
         StringBuilder result = new StringBuilder();
 
         while (matcher.find()){
             String found = matcher.group();
-            matcher.appendReplacement(result, "**" + found + "**");
+            matcher.appendReplacement(result,corVermelha + found + resetCor);
         }
 
         matcher.appendTail(result);
