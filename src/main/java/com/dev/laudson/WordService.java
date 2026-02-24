@@ -5,37 +5,28 @@ import java.util.regex.Pattern;
 
 public class WordService {
 
-    public int countOccurrences(String text, String target){
-        Pattern pattern = buildPattern(target);
+    final String RED_COLOR = "\u001b[31m";
+    final String RESET_COLOR = "\u001b[0m";
+
+
+    public Pattern buildPattern(String target) {
+       String regex = "\\b" + Pattern.quote(target) + "\\b";
+       return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+    }
+
+    public WordSearchResult search(String text, Pattern pattern){
         Matcher matcher = pattern.matcher(text);
 
         int count = 0;
-        while (matcher.find()){
-            count++;
-        }
-        return count;
-    }
-
-    public String highlightWord(String text, String target){
-        Pattern pattern = buildPattern(target);
-        Matcher matcher = pattern.matcher(text);
-
-        String corVermelha = "\u001b[31m";
-        String resetCor = "\u001b[0m";
-
         StringBuilder result = new StringBuilder();
 
         while (matcher.find()){
-            String found = matcher.group();
-            matcher.appendReplacement(result,corVermelha + found + resetCor);
+            count++;
+            String found  = matcher.group();
+            matcher.appendReplacement(result, RED_COLOR + found + RESET_COLOR);
         }
-
         matcher.appendTail(result);
-        return result.toString();
-    }
 
-    private Pattern buildPattern(String target){
-        String regex = "\\b" + Pattern.quote(target) + "\\b";
-        return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        return new WordSearchResult(count, result.toString());
     }
 }
