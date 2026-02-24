@@ -14,7 +14,9 @@ public class WordService {
        return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
     }
 
-    public WordSearchResult search(String text, Pattern pattern){
+    public WordSearchResult search(String text, String target){
+
+        Pattern pattern = buildPattern(target);
         Matcher matcher = pattern.matcher(text);
 
         int count = 0;

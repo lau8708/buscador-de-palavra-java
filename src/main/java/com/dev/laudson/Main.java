@@ -1,7 +1,6 @@
 package com.dev.laudson;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,8 +14,7 @@ public class Main {
             String text = readFullText(scanner);
             String targetWord = readTargetWord(scanner);
 
-            Pattern pattern = wordService.buildPattern(targetWord);
-            WordSearchResult result = wordService.search(text, pattern);
+            WordSearchResult result = wordService.search(text, targetWord);
 
             showResult(result, targetWord);
         }
