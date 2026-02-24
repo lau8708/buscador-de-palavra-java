@@ -1,6 +1,6 @@
 # Buscador de palavras em JAVA
 
-Projeto em Java que conta e destaca ocorrências de uma palvra em um texto, ignorando maiúsculas/minúsculas e preservando o formato original.
+Projeto em Java que conta e destaca ocorrências de uma palavra em um texto, ignorando maiúsculas/minúsculas e preservando o formato original.
 
 # Tecnologias usadas
 
