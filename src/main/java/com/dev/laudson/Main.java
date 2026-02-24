@@ -1,6 +1,7 @@
 package com.dev.laudson;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,10 +15,10 @@ public class Main {
             String text = readFullText(scanner);
             String targetWord = readTargetWord(scanner);
 
-            int count = wordService.countOccurrences(text, targetWord);
-            String textHighlighted = wordService.highlightWord(text, targetWord);
+            Pattern pattern = wordService.buildPattern(targetWord);
+            WordSearchResult result = wordService.search(text, pattern);
 
-            showResult(targetWord, count, textHighlighted);
+            showResult(result, targetWord);
         }
     }
 
@@ -65,15 +66,15 @@ public class Main {
         return target;
     }
 
-    private static void showResult(String targetWord, int count, String textHighlighted){
+    private static void showResult(WordSearchResult result, String targetWord){
 
-        String format = (count == 1) ? "vez" : "vezes";
+        String format = (result.count() == 1) ? "vez" : "vezes";
 
         System.out.printf(
                         "--- RESULTADO ---%n" +
                         "A palavra '%s' apareceu %d %s%n%n" +
                         "Texto formatado:%n%s"
 
-        , targetWord, count, format, textHighlighted);
+        , targetWord, result.count(), format, result.highLigthedText());
     }
 }
